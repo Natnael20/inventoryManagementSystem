@@ -34,7 +34,7 @@ public class Main {
 	public static final String ITEM_ALREADY_EXISTS = "Item with this name already exists. Please enter a unique name.";
 	public static final String POSITIVE_QUANTITY = "Quantity must be a positive number.";
 	public static final String ITEM_NOT_FOUND = "The specified item does not exist in the inventory.";
-	public static final String Empty_Inventory = "No items in the inventory to display.";
+	public static final String EMPTY_INVENTORY = "No items in the inventory to display.";
 	public static final String INVALID_OPTION = "Invalid menu option. Please try again.";
 	public static final String EXIT_PROGRAM = "Exiting the program..........";
 	
@@ -279,34 +279,25 @@ public class Main {
 	 */
 	
 	public static void printInventorySortedByName(String[][] name, int[][] quantity, double[][] price, int[] saveData) {
-		//prompt the user to enter the name of the item
-		System.out.print(ITEM_NAME);
-		String itemName = scanner.nextLine();
+		//Validation: Ensure there is at least one item.
+		if (saveData[0] == 0) {
+			System.out.println(EMPTY_INVENTORY);
+			return; //exit the program
+		}
 
 		//sorted quantity
 		bubbleSortByName(name, quantity, price, saveData[0]);
 		
-		//validation
-		//Ensure there is at least one item in the inventory before printing.
-		boolean itemFound = false;
+		//creating a table and printing out the name, quantity and the price of the item
 		for(int i=0; i < saveData[0]; i++) {
-			if(name[0][i].trim().equalsIgnoreCase(itemName)) {
-				itemFound = true;
-
-				System.out.printf("%-15s %-15s %-15s%n", "Name", "Quantity", "Price");
-				for(int j=0; j < saveData[i]; j++) {
-					System.out.printf("%-15s %-15s %-15s%n",
-							name[i][j], //name of the item
-							quantity[i][j], //quantity of the item
-							price[i][j] //price of the item
-							);
-				}
+			System.out.printf("%-15s %-15s %-15s%n", "Name", "Quantity", "Price");
+			for(int j=0; j < saveData[i]; j++) {
+				System.out.printf("%-15s %-15s %-15s%n",
+						name[i][j], //name of the item
+						quantity[i][j], //quantity of the item
+						price[i][j] //price of the item
+						);
 			}
-		}
-
-		if(!itemFound) {
-			System.out.println(ITEM_NOT_FOUND);
-			return;
 		}
 	}
 
@@ -323,33 +314,25 @@ public class Main {
 	 * @param saveData, savedata parameter is used to save data in respective 2d array
 	 */
 	public static void printInventorySortedByQuantity(String[][] name, int[][] quantity, double[][] price, int[] saveData) {
-		//prompt the user to enter the name of the item
-		System.out.print(ITEM_NAME);
-		String itemName = scanner.nextLine();
+		//Validation: Ensure there is at least one item.
+		if (saveData[0] == 0) {
+	        System.out.println(EMPTY_INVENTORY);
+	        return; //exit the program
+	    }
 		
 		//sorted quantity
 		bubbleSortByQuantity(name, quantity, price, saveData[0]);
-		//validation
-		//Ensure there is at least one item in the inventory before printing.
-		boolean itemFound = false;
+		
+		//creating a table and printing out the name, quantity and the price of the item
 		for(int i=0; i < saveData[0]; i++) {
-			if(name[0][i].equalsIgnoreCase(itemName)) {
-				itemFound = true;
-				
-				System.out.printf("%-15s %-15s %-15s%n", "Name", "Quantity", "Price");
-				for(int j=0; j < saveData[i]; j++) {
-					System.out.printf("%-15s %-15s %-15s%n",
-							name[i][j], //name of the item
-							quantity[i][j], //quantity of the item
-							price[i][j] //price of the item
-							);
-				}
+			System.out.printf("%-15s %-15s %-15s%n", "Name", "Quantity", "Price");
+			for(int j=0; j < saveData[i]; j++) {
+				System.out.printf("%-15s %-15s %-15s%n",
+						name[i][j], //name of the item
+						quantity[i][j], //quantity of the item
+						price[i][j] //price of the item
+						);
 			}
-		}
-		//if item is not found, error message
-		if(!itemFound) {
-			System.out.println(ITEM_NOT_FOUND);
-			return; //exit
 		}
 	}
 	
